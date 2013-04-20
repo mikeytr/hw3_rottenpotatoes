@@ -38,4 +38,7 @@ Scenario: no ratings selected
   # see assignment
 
 Scenario: all ratings selected
-  # see assignment
+   Given I check the following ratings: R, PG, G, PG-13
+   And   I Press "Refresh"
+   Then  I should be on the RottenPotatoes home page
+   And   I should see all 10 movies

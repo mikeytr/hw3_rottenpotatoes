@@ -18,6 +18,11 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
    page.body.should =~ regexp
 end
 
+Then /I should see all (.*) movies/ do |number|
+   movies.rows.should == number
+end
+
+
 # Make it easier to express checking or unchecking several boxes at once
 #  "When I uncheck the following ratings: PG, G, R"
 #  "When I check the following ratiUnimplemented (MiniTest::Assertion)ngs: G"
