@@ -14,9 +14,8 @@ end
 #   on the same page
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  flunk "Unimplemented"
+   regexp = /#{e1}.*#{e2}/m
+   page.body.should =~ regexp
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -24,7 +23,14 @@ end
 #  "When I check the following ratiUnimplemented (MiniTest::Assertion)ngs: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  # HINT: use String#split to split up the rating_list, then
-  #   iterate over the ratings and reuse the "When I check..." or
-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+   rating_list.split(/,[\s+]/).each do |rating|
+      case uncheck
+         when "un"
+            puts "Unchecking ratings_#{rating}"
+            uncheck("ratings_#{rating}")
+         else
+            puts "Checking ratings_#{rating}"
+            check("ratings_#{rating}")
+      end
+   end
 end
