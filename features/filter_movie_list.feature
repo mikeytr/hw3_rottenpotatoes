@@ -35,10 +35,13 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
    And   I should not see "Chicken Run"
 
 Scenario: no ratings selected
-  # see assignment
-
+   Given I uncheck the following ratings: R, PG, G, PG-13
+   And   I press "Refresh"
+   Then  I should be on the RottenPotatoes home page
+   And   I should see 0 movies
+   
 Scenario: all ratings selected
    Given I check the following ratings: R, PG, G, PG-13
-   And   I Press "Refresh"
+   And   I press "Refresh"
    Then  I should be on the RottenPotatoes home page
-   And   I should see all 10 movies
+   And   I should see 10 movies

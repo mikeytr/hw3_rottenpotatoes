@@ -18,10 +18,10 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
    page.body.should =~ regexp
 end
 
-Then /I should see all (.*) movies/ do |number|
-   movies.rows.should == number
+Then /I should see (.*) movies/ do |number|
+   rows = page.all('table#movies tbody tr').count
+   rows.should == Integer(number)
 end
-
 
 # Make it easier to express checking or unchecking several boxes at once
 #  "When I uncheck the following ratings: PG, G, R"
@@ -31,10 +31,8 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
    rating_list.split(/,[\s+]/).each do |rating|
       case uncheck
          when "un"
-            puts "Unchecking ratings_#{rating}"
             uncheck("ratings_#{rating}")
          else
-            puts "Checking ratings_#{rating}"
             check("ratings_#{rating}")
       end
    end
